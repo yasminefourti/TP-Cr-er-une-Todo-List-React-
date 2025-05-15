@@ -10,11 +10,29 @@ function App() {
      {title:"reviser le cour" ,id:"2" ,done:false}
 
   ];
-  const [taches]=useState(tabTaches);
+  const [taches, setTaches]=useState(tabTaches);
+
+
+   // 🟢 Toggle "done" d'une tâche
+  const toggleDone = (id) => {
+    const updated = taches.map((t) =>
+      t.id === id ? { ...t, done: !t.done } : t
+    );
+    setTaches(updated);
+  };
+
+
+  // 🔴 Supprimer une tâche
+  const deleteTache = (id) => {
+    const updated = taches.filter((t) => t.id !== id);
+    setTaches(updated);
+  };
+
+
   return (
     <div className="App">
       <h1>Liste des tâches</h1>
-      <TodoList taches={taches} />
+      <TodoList taches={taches}  onToggle={toggleDone} onDelete={deleteTache} />
       
     </div>
   );

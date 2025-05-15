@@ -1,13 +1,24 @@
 import React from 'react';
 
-function TodoItem({tache}) {
+function TodoItem({tache ,onToggle, onDelete}) {
+
+    const itemStyle = {
+        textDecoration: tache.done ? 'line-through' : 'none',
+        color: tache.done ? 'gray' : 'black',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        marginBottom: '8px'
+    };
+
   return (
     
+    
     <li>
-        {tache.title}  {tache.done ? "✔️" : "❌"}
-            
-        <button>Modifier</button>
-        <button>Supprimer</button>
+        <input type="checkbox" checked={tache.done}  onChange={() => onToggle(tache.id)} />
+        <span>{tache.title}</span>   
+        <button onClick={() => alert("modifier tache")}  >Modifier</button>
+        <button onClick={() => onDelete(tache.id)}>Supprimer</button>
     </li>
     
   );
