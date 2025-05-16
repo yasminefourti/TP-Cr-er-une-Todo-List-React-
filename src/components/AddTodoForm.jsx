@@ -1,33 +1,39 @@
-import React, { useState } from 'react';
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+// src/components/AddTodoForm.jsx
+import React, { useState } from "react";
 
 function AddTodoForm({ onAdd }) {
-  const [newTitle, setNewTitle] = useState('');
+  const [title, setTitle] = useState("");
+  const [priority, setPriority] = useState("moyenne");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (newTitle.trim() === '') return;
+    if (!title.trim()) return;
 
-    const newTache = {
-      id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(),
-      title: newTitle.trim(),
-      done: false
-    };
+    onAdd({
+      id: Date.now().toString(),
+      title,
+      done: false,
+      priority, // Ajout de la priorité
+    });
 
-    onAdd(newTache);
-    setNewTitle('');
+    setTitle("");
+    setPriority("moyenne");
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
-      <Input
+    <form onSubmit={handleSubmit}>
+      <input
         type="text"
-        value={newTitle}
-        onChange={(e) => setNewTitle(e.target.value)}
         placeholder="Nouvelle tâche"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
       />
-      <Button type="submit">Ajouter</Button>
+      <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+        <option value="haute">Haute</option>
+        <option value="moyenne">Moyenne</option>
+        <option value="basse">Basse</option>
+      </select>
+      <button type="submit">Ajouter</button>
     </form>
   );
 }

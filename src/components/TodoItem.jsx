@@ -2,18 +2,37 @@ import React from 'react';
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 
+// Composant d'affichage de la priorité
+function PriorityBadge({ priority }) {
+  const style = {
+    padding: "2px 6px",
+    borderRadius: "5px",
+    color: "white",
+    fontSize: "0.8rem",
+  };
+
+  if (priority === "haute")
+    return <span style={{ ...style, background: "red" }}>Haute</span>;
+  if (priority === "moyenne")
+    return <span style={{ ...style, background: "orange" }}>Moyenne</span>;
+  if (priority === "basse")
+    return <span style={{ ...style, background: "green" }}>Basse</span>;
+
+  return null;
+}
+
 function TodoItem({ tache, onToggle, onDelete }) {
   const itemStyle = {
     textDecoration: tache.done ? 'line-through' : 'none',
     color: tache.done ? 'gray' : 'black',
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
     gap: '10px',
     marginBottom: '8px',
     padding: '10px',
     border: '1px solid #ddd',
     borderRadius: '6px',
-    justifyContent: 'space-between'
   };
 
   return (
@@ -21,6 +40,7 @@ function TodoItem({ tache, onToggle, onDelete }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <Checkbox checked={tache.done} onCheckedChange={() => onToggle(tache.id)} />
         <span>{tache.title}</span>
+        <PriorityBadge priority={tache.priority} />
       </div>
       <div style={{ display: 'flex', gap: '8px' }}>
         <Button variant="outline" onClick={() => alert("modifier tache")}>Modifier</Button>
