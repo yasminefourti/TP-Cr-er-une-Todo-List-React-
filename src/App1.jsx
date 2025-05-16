@@ -4,6 +4,7 @@ import './App.css';
 import { useState } from 'react';
 import TodoList from './components/TodoList';
 import AddTodoForm from './components/AddTodoForm';
+import FilterTabs from './components/FilterTab';// ← Ajouté
 
 function App1() {
   const tabTaches = [
@@ -13,6 +14,7 @@ function App1() {
   ];
 
   const [taches, setTaches] = useState(tabTaches);
+  const [filter, setFilter] = useState("all"); // ← Nouveau state
 
   const toggleDone = (id) => {
     const updated = taches.map((t) =>
@@ -34,7 +36,13 @@ function App1() {
     <div className="App1">
       <h1>Liste des tâches</h1>
       <AddTodoForm onAdd={addTache} />
-      <TodoList taches={taches} onToggle={toggleDone} onDelete={deleteTache} />
+      <FilterTabs filter={filter} setFilter={setFilter} /> {/* ← Ajouté */}
+      <TodoList
+        taches={taches}
+        onToggle={toggleDone}
+        onDelete={deleteTache}
+        filter={filter} // ← Ajouté
+      />
     </div>
   );
 }
