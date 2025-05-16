@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 function AddTodoForm({ onAdd }) {
   const [newTitle, setNewTitle] = useState('');
@@ -13,19 +15,19 @@ function AddTodoForm({ onAdd }) {
       done: false
     };
 
-    onAdd(newTache); // Appelle la fonction transmise par App
-    setNewTitle(''); // Réinitialise le champ
+    onAdd(newTache);
+    setNewTitle('');
   };
 
   return (
     <form onSubmit={handleSubmit} style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
-      <input
+      <Input
         type="text"
         value={newTitle}
         onChange={(e) => setNewTitle(e.target.value)}
         placeholder="Nouvelle tâche"
       />
-      <button type="submit">Ajouter</button>
+      <Button type="submit">Ajouter</Button>
     </form>
   );
 }
